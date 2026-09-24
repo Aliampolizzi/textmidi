@@ -1,5 +1,5 @@
 title "Back Porch Shuffle"
-tempo 120        # tempo counts quarter notes, so the 12/8 dotted-quarter pulse is 80
+tempo 180        # tempo counts quarter notes, so the 12/8 dotted-quarter pulse is 120
 time 12/8
 key A
 
