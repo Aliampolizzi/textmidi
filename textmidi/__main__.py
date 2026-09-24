@@ -21,8 +21,9 @@ def read_source(path: str) -> str:
 
 
 def main(argv: list[str] | None = None) -> int:
-    sys.stdout.reconfigure(errors="replace")
-    sys.stderr.reconfigure(errors="replace")
+    for stream in (sys.stdout, sys.stderr):
+        if hasattr(stream, "reconfigure"):  # not the StringIO the GUI captures output in
+            stream.reconfigure(errors="replace")
     ap = argparse.ArgumentParser(prog="textmidi", description="Convert a textmidi score into a .mid file.")
     ap.add_argument("input", help="score file (a Markdown reply with a ```textmidi block also works), or - for stdin")
     ap.add_argument("-o", "--output", help="output path (default: the input name with .mid)")

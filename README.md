@@ -22,6 +22,8 @@ cd textmidi
 py -m pip install -e .[dev]
 ```
 
+On Windows you can instead double-click `setup.bat` in the downloaded folder. It checks for Python 3.10+ and runs the same install.
+
 This installs `mido`, plus `pytest` for the tests. On macOS or Linux, use `python3` in place of `py`. After that, `py -m textmidi` works from any folder. A `textmidi` command also works if Python's `Scripts` folder is on your PATH.
 
 ## Use
@@ -35,6 +37,8 @@ py -m textmidi song.txt --check              # validate and summarise, write not
 py -m textmidi song.txt --lenient            # wrong-length bars become warnings
 Get-Clipboard | py -m textmidi - -o song.mid # convert straight from the clipboard
 ```
+
+To use a window instead, double-click `textmidi-gui.pyw` or run `py -m textmidi.gui`. Choose a score with Browse, then click Convert to MIDI. The `.mid` is written next to the score, and any errors appear in the window.
 
 The input can be a raw score or a whole chat reply. If the file contains Markdown code fences, textmidi uses the ```` ```textmidi ```` block, or else the first fenced block, so you can paste a model's answer as-is.
 
