@@ -1,0 +1,67 @@
+# textmidi demo -- 16 bars in A minor: 4-bar intro, 8-bar groove with a lead, 4-bar outro.
+# Convert with:  py -m textmidi examples\demo.txt   (add --humanize for a looser feel)
+title "Night Drive"
+tempo 96
+time 4/4
+key Am
+
+# ---- drum patterns (one bar each) ----
+define groove {
+  | [kick hat]:e hat [snare hat] hat [kick hat] [kick hat] [snare hat] hat |
+}
+define groove_crash {
+  | [kick crash]:e hat [snare hat] hat [kick hat] [kick hat] [snare hat] hat |
+}
+define fill {
+  | [kick hat]:e hat [snare hat] hat snare:s!50 snare!65 snare!80 snare!95 tom_high:s tom_high tom_mid tom_low |
+}
+
+# ---- bass: one bar per chord, Am F C G ----
+define bassline {
+  | A1:q. A1:e r A1 C2 E2 |
+  | F1:q. F1:e r F1 A1 C2 |
+  | C2:q. C2:e r C2 E2 G2 |
+  | G1:q. G1:e r G1 B1 D2 |
+}
+
+# ---- keys comping: pedal re-pressed on each chord ----
+define comp {
+  | @sustain=off @sustain=on r:e [A3 C4 E4 G4]:q. [A3 C4 E4 G4]:e [A3 C4 E4 G4]:q. |
+  | @sustain=off @sustain=on r:e [F3 A3 C4 E4]:q. [F3 A3 C4 E4]:e [F3 A3 C4 E4]:q. |
+  | @sustain=off @sustain=on r:e [G3 C4 E4]:q. [G3 C4 E4]:e [G3 C4 E4]:q. |
+  | @sustain=off @sustain=on r:e [G3 B3 D4]:q. [G3 B3 D4]:e [G3 B3 D4]:q. |
+}
+
+track Keys  program=electric_piano_1  gate=0.9
+@pan=44 @mp @sustain=on
+| [A3 C4 E4 G4]:w | @sustain=off @sustain=on [F3 A3 C4 E4]:w |
+| @sustain=off @sustain=on [G3 C4 E4]:w | @sustain=off @sustain=on [G3 B3 D4]:w |
+@mf $comp x2
+| @sustain=off @sustain=on [A3 C4 E4 G4]:w | @sustain=off @sustain=on [F3 A3 C4 E4]:w |
+| @sustain=off @sustain=on [G3 B3 D4]:w |
+@tempo=84
+| @sustain=off @sustain=on [A3 C4 E4 A4]:w | @sustain=off
+
+track Bass  program=electric_bass_finger  vel=90
+| A1:w | F1 | C2 | G1 |
+$bassline x2
+| A1:q. A1:e r A1 C2 E2 | F1:q. F1:e r F1 A1 C2 | G1:q. G1:e r G1 B1 D2 | A1:w |
+
+track Drums  drums  vel=100
+( | r:w | ) x4
+$groove_crash $groove x6 $fill
+$groove_crash $groove x2 | [kick crash]:w |
+
+track Lead  program=lead_2_sawtooth  vel=88  gate=0.95
+@pan=84 @expr=100
+( | r:w | ) x4
+| E5:q. D5:e C5:q A4 |
+| @expr=70..120:h. C5:h. A4:q |
+| G4:q. A4:e C5:q E5 |
+| @bend=-1..0:e @mod=0..90:w D5:w |                # scoop into the note, vibrato swells in
+| @mod=0 E5:q. G5:e A5:q G5:e E5 |
+| F5:q. E5:e C5:h |
+| E5:q. D5:e C5:q D5 |
+| B4:h. @bend=0..2:q D5:q |                        # bend D up to E
+| @bend=0 @expr=110..50:w. A4:w~ | A4:h r:h |      # tied A, fading out over six beats
+| @expr=100 B4:q C5 D5 B4 | A4:w |

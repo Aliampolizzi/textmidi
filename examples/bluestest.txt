@@ -1,0 +1,96 @@
+title "Back Porch Shuffle"
+tempo 120        # tempo counts quarter notes, so the 12/8 dotted-quarter pulse is 80
+time 12/8
+key A
+
+# 12-bar blues in A, two choruses, then a Bb9 -> A9 ending
+# | A7 | D7 | A7 | A7 | D7 | D7 | A7 | A7 | E7 | D7 | A7 | E7 |
+# Each bar = 4 shuffle pairs of q + e = 6 quarter-note beats
+
+# ---------- rhythm guitar: boogie riff ----------
+define A_box  { | [A2 E3]:q [A2 E3]:e [A2 F#3]:q [A2 F#3]:e [A2 G3]:q [A2 G3]:e [A2 F#3]:q [A2 F#3]:e | }
+define D_box  { | [D3 A3]:q [D3 A3]:e [D3 B3]:q [D3 B3]:e [D3 C4]:q [D3 C4]:e [D3 B3]:q [D3 B3]:e | }
+define E_box  { | [E2 B2]:q [E2 B2]:e [E2 C#3]:q [E2 C#3]:e [E2 D3]:q [E2 D3]:e [E2 C#3]:q [E2 C#3]:e | }
+define A_chug { | [A2 E3]:q [A2 E3]:e [A2 E3]:q [A2 E3]:e [A2 E3]:q [A2 E3]:e [A2 E3]:q [A2 E3]:e | }
+define rhythm11 { $A_box $D_box $A_box x2 $D_box x2 $A_box x2 $E_box $D_box $A_chug }
+
+# ---------- bass: walking boogie ----------
+define bA_up { | A1:q A1:e C#2:q C#2:e E2:q E2:e F#2:q F#2:e | }
+define bA_dn { | G2:q G2:e F#2:q F#2:e E2:q E2:e C#2:q C#2:e | }
+define bD_up { | D2:q D2:e F#2:q F#2:e A2:q A2:e B2:q B2:e | }
+define bD_dn { | C3:q C3:e B2:q B2:e A2:q A2:e F#2:q F#2:e | }
+define bE_up { | E1:q E1:e G#1:q G#1:e B1:q B1:e C#2:q C#2:e | }
+define bass11 { $bA_up $bD_up $bA_up $bA_dn $bD_up $bD_dn $bA_up $bA_dn $bE_up $bD_up $bA_up }
+
+# ---------- lead: chromatic turnaround under a high A ----------
+define turnaround { | [G3 A4]:q A4:e [F#3 A4]:q A4:e [F3 A4]:q A4:e [E3 A4]:q A4:e | }
+
+# ---------- drums: shuffle ----------
+define shuf       { | [kick hat]:q hat:e [snare hat]:q hat:e [kick hat]:q [kick hat]:e [snare hat]:q snare:e!40 | }
+define shuf_crash { | [kick crash]:q hat:e [snare hat]:q hat:e [kick hat]:q [kick hat]:e [snare hat]:q snare:e!40 | }
+define shuf_ride  { | [kick ride]:q ride:e [snare ride]:q ride:e [kick ride]:q [kick ride]:e [snare ride]:q snare:e!40 | }
+define ride_crash { | [kick crash]:q ride:e [snare ride]:q ride:e [kick ride]:q [kick ride]:e [snare ride]:q snare:e!40 | }
+define fill       { | [kick hat]:q hat:e [snare hat]:q hat:e [kick snare]:e snare:e!60 snare:e!80 tom_high:e tom_mid:e tom_floor:e | }
+
+
+track "Rhythm Guitar"  program=electric_guitar_clean  vel=74  gate=0.8
+@pan=40
+# chorus 1
+$rhythm11
+| [E2 B2]:q [E2 B2]:e [E2 C#3]:q [E2 C#3]:e [E2 B2 D3 G#3 D4]:q. r:q. |
+# chorus 2
+$rhythm11
+| [E2 B2]:q [E2 B2]:e [E2 C#3]:q [E2 C#3]:e [E2 B2 D3 G#3 D4]:q. r:q [Bb2 Bb3 D4 Ab4 C5]:e |
+# ending: Bb9 slides into A9
+| @gate=1.0 [A2 A3 C#4 G4 B4]:h.~ [A2 A3 C#4 G4 B4]:h. |
+
+
+track "Lead Guitar"  program=overdriven_guitar  vel=90  bendrange=2
+@pan=88
+# chorus 1: call and response
+| r:h. @bend=0..2:e D5:q. @bend=0 C5:q A4:e |
+| A4:q C5:e D5:q C5:e @mod=0..90:h A4:h. |
+| @mod=0 r:h. G4:q A4:e C5:q A4:e |
+| @bend=0..1:e C5:q. @bend=0 A4:q G4:e @mod=0..90:h A4:h. |
+| @mod=0 r:h. D5:q C5:e A4:q C5:e |
+| D5:q. @bend=0..2:e D5:q. @bend=0 C5:q A4:e r:q. |
+| r:h. E5:q D5:e C5:q A4:e |
+| G4:q A4:e C5:q A4:e @mod=0..90:h G4:h. |
+| @mod=0 @bend=0..2:e D5:h. @bend=0 B4:q G4:e E4:q. |
+| r:q. D5:e C5:e A4:e G4:q. A4:q. |
+$turnaround
+| @bend=0..2:e A4:q. @bend=0 G#4:q. r:h. |
+# chorus 2: the solo opens up
+@vel=100
+| A4:e C5:e D5:e @bend=0..2:e D5:q. @bend=0 C5:q A4:e C5:q A4:e |
+| D5:q C5:e A4:q G4:e @mod=0..90:h F#4:h. |
+| @mod=0 E5:e D5:e C5:e A4:e C5:e A4:e G4:e A4:e G4:e E4:q. |
+| G4:q A4:e @bend=0..1:e C5:q. @bend=0 @mod=0..90:h A4:h. |
+| @mod=0 @bend=2..0:q D5:q. @bend=0 C5:q A4:e C5:q. r:q. |
+| @bend=0..2:e D5:q. @bend=0 C5:q A4:e @bend=0..2:e D5:q. @bend=0 C5:q A4:e |
+| E5:q. @bend=0..2:e D5:q. @bend=0 C5:q A4:e G4:q A4:e |
+| @mod=0..90:w A4:w r:h |
+| @mod=0 @bend=0..2:q B4:h. @bend=0 G#4:q B4:e D5:q E5:e |
+| D5:q C5:e A4:q G4:e @bend=0..2:e G4:q. @bend=0 A4:q. |
+$turnaround
+| @bend=0..2:e A4:q. @bend=0 G#4:q. r:h. |
+# ending: bend G up to A and shake it
+| @bend=0..2:e @mod=0..100:h G4:h. r:h. |
+@bend=0 @mod=0
+
+
+track Bass  program=electric_bass_finger  vel=88  gate=0.9
+$bass11
+| E1:q E1:e G#1:q G#1:e E1:q. F#1:e G1:e G#1:e |
+$bass11
+| E1:q E1:e G#1:q G#1:e E1:q. r:q Bb1:e |
+| A1:h.~ A1:h. |
+
+
+track Drums  drums  vel=88
+# chorus 1 on hi-hat
+$shuf_crash $shuf x10 $fill
+# chorus 2 on ride
+$ride_crash $shuf_ride x10
+| [kick hat]:q hat:e [snare hat]:q hat:e [kick crash]:q. r:q snare:e> |
+| [kick crash]:h. r:h. |
